@@ -13,11 +13,11 @@ export default function CheckboxList({ payload, handleRemove }) {
 	return (
 		<List>
 			{payload.map((option) => (
-				<ListItem key={option.id} role={undefined}>
+				<ListItem key={option.id} button role={undefined}>
 					<ListItemText id={option.id} primary={option.body} />
 					<ListItemSecondaryAction onClick={() => handleRemove(option.id)}>
-						<IconButton edge="end" aria-label="comments">
-							<Delete color="secondary" />
+						<IconButton color="secondary" edge="end" aria-label="comments">
+							<Delete/>
 						</IconButton>
 					</ListItemSecondaryAction>
 				</ListItem>

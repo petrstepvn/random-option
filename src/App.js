@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
 	Container,
 	TextField,
@@ -8,7 +8,7 @@ import {
 	IconButton,
 	InputAdornment,
 	Button,
-	Typography
+	Typography,
 } from '@material-ui/core';
 import List from './components/List';
 import Add from '@material-ui/icons/Add';
@@ -18,6 +18,8 @@ const App = () => {
 	const [Text, setText] = useState('');
 	const [Options, setOptions] = useState([]);
 	const [RandomOption, setRandomOption] = useState('');
+
+	const inputRef = useRef();
 
 	const handleChange = (e) => {
 		setText(e.target.value);
@@ -40,6 +42,7 @@ const App = () => {
 
 	const handleRandomOption = (e) => {
 		e.preventDefault();
+		if (!Options.length) return;
 		const randomIndex = Math.floor(Math.random() * Options.length);
 		setRandomOption(Options[randomIndex].body);
 	};
@@ -50,11 +53,18 @@ const App = () => {
 				<FormControl fullWidth>
 					<InputLabel>Add new item</InputLabel>
 					<Input
+						inputRef={inputRef}
+						autoFocus
 						value={Text}
 						onChange={(e) => handleChange(e)}
 						endAdornment={
 							<InputAdornment position="end">
-								<IconButton>
+								<IconButton
+									onClick={(e) => {
+										handleSubmit(e);
+										inputRef.current.focus();
+									}}
+								>
 									<Add />
 								</IconButton>
 							</InputAdornment>
